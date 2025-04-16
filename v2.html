@@ -91,7 +91,7 @@
       width: 400px;
       height: 800px;
       border: 15px solid #303030;
-      border-radius: 70px;
+      border-radius: 80px;
       padding: 0px;
       position: relative;
       margin: 20px;
@@ -126,8 +126,8 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      border-radius: 90px;
-      background: #fff0;
+      border-radius: 70px;
+      overflow: hidden;
     }
 
     .timer-container {
@@ -136,6 +136,7 @@
       flex-direction: column;
       gap: 15px;
       width: 80%;
+      z-index: 2;
     }
 
     .timer-value {
@@ -158,6 +159,7 @@
       align-items: center;
       gap: 15px;
       padding: 60px 15px 15px;
+      background: none;
     }
 
     .agenda-item {
@@ -241,6 +243,19 @@
       gap: 20px;
       word-wrap: break-word;
     }
+
+    img#wave-svg {
+      position: absolute;
+      bottom: 0;
+      height: calc(var(--percentage) * 100%);
+      z-index: 1;
+    }
+
+    .phone-container.agenda-phone {
+      background-image: url("/static/mesh-91.png");
+      background-size: auto;
+      background-color: transparent !important;
+    }
   </style>
 </head>
 
@@ -275,20 +290,7 @@
             <span class="timer-unit">S</span>
           </div>
         </div>
-        <svg id="wave-svg" width="100%" height="100%" viewBox="0 0 300 500"
-          style="position: absolute; bottom: 0; left: 0; z-index: 0; opacity: 0.3;">
-          <defs>
-            <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:var(--dark-green);stop-opacity:0.7" />
-              <stop offset="100%" style="stop-color:var(--dark-green);stop-opacity:0.3" />
-            </linearGradient>
-          </defs>
-          <path id="wave-path" fill="url(#wave-gradient)" d="M0,500 C100,450 200,550 300,500 L300,600 L0,600 Z">
-            <animate attributeName="d" values="M0,500 C100,450 200,550 300,500 L300,600 L0,600 Z;
-                   M0,500 C100,550 200,450 300,500 L300,600 L0,600 Z;
-                   M0,500 C100,450 200,550 300,500 L300,600 L0,600 Z" dur="10s" repeatCount="indefinite" />
-          </path>
-        </svg>
+        <img id="wave-svg" src="/static/waves.svg" />
       </div>
     </div>
 
@@ -350,10 +352,6 @@
       // Set custom property for SVG animation
       document.getElementById('wave-svg').style.setProperty('--percentage', percentage);
 
-      // Update wave position based on percentage
-      const waveHeight = 500 - (percentage * 400); // Higher values move wave up
-      document.getElementById('wave-path').setAttribute('d',
-        `M0,${waveHeight} C100,${waveHeight - 50} 200,${waveHeight + 50} 300,${waveHeight} L300,600 L0,600 Z`);
     }
 
     // Function to update agenda
@@ -638,6 +636,120 @@
     }
     // ]]>
   </script>
+  <!-- Code injected by live-server -->
+  <script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+      (function () {
+        function refreshCSS() {
+          var sheets = [].slice.call(document.getElementsByTagName("link"));
+          var head = document.getElementsByTagName("head")[0];
+          for (var i = 0; i < sheets.length; ++i) {
+            var elem = sheets[i];
+            var parent = elem.parentElement || head;
+            parent.removeChild(elem);
+            var rel = elem.rel;
+            if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+              var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+              elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+            }
+            parent.appendChild(elem);
+          }
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function (msg) {
+          if (msg.data == 'reload') window.location.reload();
+          else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+          console.log('Live reload enabled.');
+          sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+      })();
+    }
+    else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+  </script>
+  <!-- Code injected by live-server -->
+  <script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+      (function () {
+        function refreshCSS() {
+          var sheets = [].slice.call(document.getElementsByTagName("link"));
+          var head = document.getElementsByTagName("head")[0];
+          for (var i = 0; i < sheets.length; ++i) {
+            var elem = sheets[i];
+            var parent = elem.parentElement || head;
+            parent.removeChild(elem);
+            var rel = elem.rel;
+            if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+              var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+              elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+            }
+            parent.appendChild(elem);
+          }
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function (msg) {
+          if (msg.data == 'reload') window.location.reload();
+          else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+          console.log('Live reload enabled.');
+          sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+      })();
+    }
+    else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 
 </html>
