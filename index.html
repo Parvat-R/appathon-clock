@@ -338,6 +338,14 @@
         endTime.setDate(endTime.getDate() + 1);
       }
 
+      if (now.getHours() >= 18) {
+        document.querySelector('.timer-container').textContent = "End";
+        document.querySelector('.timer-container').style.fontSize = "100px";
+        document.querySelector('.timer-container').style.fontWeight = "1000";
+        document.querySelector('.timer-container').style.textTransform = "uppercase";
+        return;
+      }
+
       // Calculate time difference
       const timeDiff = endTime - now;
 
@@ -358,7 +366,6 @@
 
       // Set custom property for SVG animation
       document.getElementById('wave-svg').style.setProperty('--percentage', percentage);
-
     }
 
     // Function to update agenda
