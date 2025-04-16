@@ -2,47 +2,457 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/style.css">
-    <script src="/script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APPATHON Countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-green: #3DE08F;
+      --dark-green: #004D31;
+      --light-green: #E0FFE9;
+      --medium-green: #B0FFD2;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      /* display: flex; */
+      flex-direction: row;
+      /* align-items: flex-start; */
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* Marquee Section */
+    .marquee-section {
+      display: flex;
+      background-color: var(--primary-green);
+      color: var(--dark-green);
+      font-weight: 700;
+      font-size: 24px;
+      padding: 15px 0;
+      overflow: clip;
+      position: absolute;
+      height: 100vh;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .marquee-content {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 30s linear infinite;
+      text-orientation: sideways;
+      writing-mode: sideways-lr;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .marquee-item {
+      padding: 0 20px;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateY(50%);
+      }
+
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+
+    /* Main Container */
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* flex-wrap: wrap; */
+      padding: 40px 20px;
+      width: 100vw;
+      height: 100vh;
+      gap: 200px;
+    }
+
+    /* Phone Containers */
+    .phone-container {
+      width: 400px;
+      height: 800px;
+      border: 15px solid #303030;
+      border-radius: 80px;
+      padding: 0px;
+      position: relative;
+      margin: 20px;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 30px;
+      background-color: #1d1d1d;
+      border-radius: 20px;
+      z-index: 10;
+    }
+
+    /* Timer Phone */
+    .phone-screen {
+      color: var(--dark-green);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-radius: 70px;
+      overflow: hidden;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+      width: 80%;
+      z-index: 2;
+    }
+
+    .timer-value {
+      font-size: 160px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .timer-unit {
+      font-size: 64px;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
+    /* Agenda Phone */
+    .agenda-phone .phone-screen {
+      padding-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding: 60px 15px 15px;
+      background: none;
+    }
+
+    .agenda-item {
+      width: 100%;
+      background-color: white;
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .agenda-title {
+      font-weight: 500;
+      color: #333;
+      width: 200px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .agenda-time {
+      background-color: var(--medium-green);
+      color: var(--dark-green);
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .agenda-next {
+      transform: scale(1.05);
+      background-color: var(--primary-green);
+      box-shadow: 0 5px 15px rgba(61, 224, 143, 0.3);
+    }
+
+    .agenda-next .agenda-title {
+      font-weight: 700;
+      color: var(--dark-green);
+    }
+
+    .agenda-completed {
+      opacity: 0.6;
+    }
+
+    .agenda-upcoming {
+      opacity: 0.8;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .new-agenda {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .timer-container>div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    svg#wave-svg {
+      display: none;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    div#agenda-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 5px;
+      word-wrap: break-word;
+      width: 100%;
+      padding: 0 5px;
+    }
+
+    img#wave-svg {
+      position: absolute;
+      bottom: 0;
+      height: calc(var(--percentage) * 100%);
+      z-index: 1;
+    }
+
+    .phone-container.agenda-phone {
+      background-image: url("/static/mesh-91.png");
+      background-size: auto;
+      background-color: transparent !important;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Marquee Section -->
+  <div class="marquee-section">
+    <div class="marquee-content">
+      APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25
+      APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25
+      APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25
+      APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25 APPATHON'25
+    </div>
+  </div>
 
-    <section id="page">
-
-        <div id="timer-container" class="timer-container">
-
-            <div class="clock">
-
-                <div class="timer-placeholder">Remaining:</div>
-                <div id="timer">00:00:00</div>
-
-            </div>
-            <div class="agenda-container">
-    
-                <ul class="list">
-                    <li class="agenda" style="--ai:0; --oi:0;">Release of Problem Statements at <span>6:00 AM</span></li>
-                    <li class="agenda" style="--ai:1; --oi:1;">Review 1 at <span>9:00 AM</span></li>
-                    <li class="agenda" style="--ai:2; --oi:2;">Refreshment 1 at <span>10:00 AM</span></li>
-                    <li class="agenda" style="--ai:3; --oi:3;">Review 2 at <span>11:30 AM</span></li>
-                    <li class="agenda" style="--ai:4; --oi:4;">Lunch at <span>12:30 PM</span></li>
-                    <li class="agenda" style="--ai:5; --oi:5;">Review 3 at <span>3:00 PM</span></li>
-                    <li class="agenda" style="--ai:6; --oi:6;">Refreshment 2 at <span>4:00 PM</span></li>
-                    <li class="agenda" style="--ai:7; --oi:7;">Review 4 at <span>5:00 PM</span></li>
-                    <li class="agenda" style="--ai:8; --oi:8;">Prize Distribution at <span>5:45 PM</span></li>
-                    <li class="agenda" style="--ai:9; --oi:9;">The End at <span>6:00 PM</span></li>
-                </ul>
-    
-            </div>
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Timer Phone -->
+    <div class="phone-container timer-phone">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="timer-container">
+          <div>
+            <span id="hours-value" class="timer-value">06</span>
+            <span class="timer-unit">H</span>
+          </div>
+          <div>
+            <span id="minutes-value" class="timer-value">34</span>
+            <span class="timer-unit">M</span>
+          </div>
+          <div>
+            <span id="seconds-value" class="timer-value">45</span>
+            <span class="timer-unit">S</span>
+          </div>
         </div>
+        <img id="wave-svg" src="/static/waves.svg" />
+      </div>
+    </div>
 
-        <div class="dummy"></div>
+    <!-- Agenda Phone -->
+    <div class="phone-container agenda-phone">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div id="agenda-container">
+          <!-- Agenda items will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-    </section>
+  <script>
+    // Sample agenda data - this would be provided externally
+    const agenda_data = {
+      0: { agenda_title: "Release of Problem Statements", agenda_time: "06:00 AM" },
+      1: { agenda_title: "Review 1", agenda_time: "09:00 AM" },
+      2: { agenda_title: "Refreshment 1", agenda_time: "10:00 AM" },
+      3: { agenda_title: "Review 2", agenda_time: "11:30 AM" },
+      4: { agenda_title: "Lunch", agenda_time: "12:30 PM" },
+      5: { agenda_title: "Review 3", agenda_time: "03:00 PM" },
+      6: { agenda_title: "Refreshment 2", agenda_time: "04:00 PM" },
+      7: { agenda_title: "Review 4", agenda_time: "05:00 PM" },
+      8: { agenda_title: "Prize Distribution", agenda_time: "05:45 PM" },
+      9: { agenda_title: "The End", agenda_time: "06:00 PM" }
+    };
 
+    // Function to update timer
+    function updateTimer() {
+      const now = new Date();
+      const endTime = new Date();
+
+      // Set end time to 6:00 PM today
+      endTime.setHours(18, 0, 0, 0);
+
+      // If current time is past 6 PM, set to tomorrow
+      if (now > endTime) {
+        endTime.setDate(endTime.getDate() + 1);
+      }
+
+      // Calculate time difference
+      const timeDiff = endTime - now;
+
+      // Calculate hours, minutes, seconds
+      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+      // Update timer display
+      document.getElementById('hours-value').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes-value').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds-value').textContent = seconds.toString().padStart(2, '0');
+
+      // Calculate percentage for SVG animation
+      const totalMinutesInHalfDay = 12 * 60;
+      const remainingMinutes = hours * 60 + minutes;
+      const percentage = remainingMinutes / totalMinutesInHalfDay;
+
+      // Set custom property for SVG animation
+      document.getElementById('wave-svg').style.setProperty('--percentage', percentage);
+
+    }
+
+    // Function to update agenda
+    function updateAgenda() {
+      const agendaContainer = document.getElementById('agenda-container');
+      agendaContainer.innerHTML = '';
+
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+
+      let foundNext = false;
+      let nextIndex = -1;
+
+      // First pass: find the next agenda
+      for (const [index, item] of Object.entries(agenda_data)) {
+        const [agendaHour, agendaMinute] = item.agenda_time.split(':').map(Number);
+        const agendaDate = new Date();
+        agendaDate.setHours(agendaHour, agendaMinute, 0, 0);
+
+        if (agendaDate > now && !foundNext) {
+          foundNext = true;
+          nextIndex = parseInt(index);
+          break;
+        }
+      }
+
+      // Second pass: create agenda items
+      for (const [index, item] of Object.entries(agenda_data)) {
+        const i = parseInt(index);
+        const agendaItem = document.createElement('div');
+        agendaItem.className = 'agenda-item';
+
+        // Determine agenda status
+        if (i < nextIndex) {
+          agendaItem.classList.add('agenda-completed');
+        } else if (i === nextIndex) {
+          agendaItem.classList.add('agenda-next');
+        } else {
+          agendaItem.classList.add('agenda-upcoming');
+          // Reduce opacity further for items further in the future
+          agendaItem.style.opacity = Math.max(0.3, 0.8 - (i - nextIndex) * 0.1);
+        }
+
+        agendaItem.innerHTML = `
+        <div class="agenda-title">${item.agenda_title}</div>
+        <div class="agenda-time">${item.agenda_time}</div>
+      `;
+
+        agendaContainer.appendChild(agendaItem);
+      }
+    }
+
+    // Initialize and set intervals
+    updateTimer();
+    updateAgenda();
+
+    // Update timer every second
+    setInterval(updateTimer, 1000);
+
+    // Update agenda every minute
+    setInterval(updateAgenda, 60000);
+
+    // Check for agenda transitions
+    setInterval(() => {
+      const now = new Date();
+      const currentMinute = now.getMinutes();
+      const currentSecond = now.getSeconds();
+
+      // Check if we're at the start of a minute (or close to it)
+      if (currentSecond === 0 || currentSecond === 1) {
+        // For each agenda item, check if it's starting now
+        for (const item of Object.values(agenda_data)) {
+          const [agendaHour, agendaMinute] = item.agenda_time.split(':').map(Number);
+
+          if (agendaHour === now.getHours() && agendaMinute === currentMinute) {
+            // Trigger agenda transition animation
+            updateAgenda();
+
+            // Add animation class to new "next" item
+            setTimeout(() => {
+              const nextItem = document.querySelector('.agenda-next');
+              if (nextItem) {
+                nextItem.classList.add('new-agenda');
+              }
+            }, 100);
+
+            break;
+          }
+        }
+      }
+    }, 1000);
+  </script>
 </body>
 
 </html>
