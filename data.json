@@ -1,0 +1,10 @@
+{
+    "PS01": {
+        "id": "PS01",
+        "name": "Problem Statement 1",
+        "description": "This is the first problem statement",
+        "limit": 3,
+        "teams": [],
+        "open": true
+    }
+}
