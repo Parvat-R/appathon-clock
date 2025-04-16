@@ -343,6 +343,7 @@
         document.querySelector('.timer-container').style.fontSize = "100px";
         document.querySelector('.timer-container').style.fontWeight = "1000";
         document.querySelector('.timer-container').style.textTransform = "uppercase";
+        document.getElementById('wave-svg').style.setProperty('--percentage', 0);
         return;
       }
 
@@ -354,18 +355,20 @@
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-      // Update timer display
-      document.getElementById('hours-value').textContent = hours.toString().padStart(2, '0');
-      document.getElementById('minutes-value').textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds-value').textContent = seconds.toString().padStart(2, '0');
-
+      
       // Calculate percentage for SVG animation
       const totalMinutesInHalfDay = 12 * 60;
       const remainingMinutes = hours * 60 + minutes;
       const percentage = remainingMinutes / totalMinutesInHalfDay;
-
+      
       // Set custom property for SVG animation
       document.getElementById('wave-svg').style.setProperty('--percentage', percentage);
+      
+      
+      // Update timer display
+      document.getElementById('hours-value').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes-value').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds-value').textContent = seconds.toString().padStart(2, '0');
     }
 
     // Function to update agenda
